@@ -9,10 +9,10 @@ const Navbar = () => {
         </Link>
       </div>
       <ul className="flex flex-row gap-4 text-sm justify-center items-end">
-        <Link href={"todos"}>
+        <Link href={"/todos"}>
           <li className="cursor-pointer">Todos</li>
         </Link>
-        <Link href={"add-todo"}>
+        <Link href={"/add-todo"}>
           <li className="cursor-pointer">Add Todo</li>
         </Link>
       </ul>

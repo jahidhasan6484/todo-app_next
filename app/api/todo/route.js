@@ -29,11 +29,52 @@ export async function POST(request) {
 
 export async function GET(request) {
   try {
-    const todos = await TodoModel.find({});
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
 
-    return NextResponse.json({
-      data: todos,
+    if (id) {
+      const todo = await TodoModel.findById(id);
+      if (!todo) {
+        return NextResponse.json({ message: "Todo not found" });
+      }
+      return NextResponse.json({ data: todo });
+    } else {
+      const todos = await TodoModel.find({});
+      return NextResponse.json({
+        data: todos,
+      });
+    }
+  } catch (error) {
+    return NextResponse.json({ message: "Server error" });
+  }
+}
+
+export async function PATCH(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    const updatedTodo = await TodoModel.findByIdAndUpdate(id, {
+      $set: {
+        status: "COMPLETED",
+      },
     });
+
+    return NextResponse.json({ data: updatedTodo, message: "Todo is updated" });
+  } catch (error) {
+    return NextResponse.json({ message: "Server error" });
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+
+    const id = searchParams.get("id");
+
+    const deletedTodo = await TodoModel.findByIdAndDelete(id);
+
+    return NextResponse.json({ data: deletedTodo, message: "Todo is deleted" });
   } catch (error) {
     return NextResponse.json({ message: "Server error" });
   }
