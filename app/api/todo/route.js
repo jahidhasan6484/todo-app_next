@@ -23,7 +23,6 @@ export async function POST(request) {
       message: "Todo added",
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Failed to add todo" });
   }
 }
@@ -36,7 +35,6 @@ export async function GET(request) {
       data: todos,
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Server error" });
   }
 }
